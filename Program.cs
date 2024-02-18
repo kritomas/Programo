@@ -6,13 +6,15 @@ namespace Programo
 	{
 		static void Main(string[] args)
 		{
-			Project project = new Project
+			Certification cert = new Certification
 			{
-				name = "Glomeria",
-				is_abandoned = true
+				lang_id = 1,
+				programmer_id = 1,
+				date_start = DateTime.Parse("2013-09-01"),
+				date_end = DateTime.Parse("2020-05-01"),
 			};
-			ProjectDAO dao = new ProjectDAO();
-			dao.Save(project);
+			CertificationDAO dao = new CertificationDAO();
+			dao.Save(cert);
 		}
 	}
 }
