@@ -6,12 +6,13 @@ namespace Programo
 	{
 		static void Main(string[] args)
 		{
-			Programmer programmer = new Programmer
+			Project project = new Project
 			{
-				username = "kritomas"
+				name = "Glomeria",
+				is_abandoned = true
 			};
-			ProgrammerDAO dao = new ProgrammerDAO();
-			dao.Save(programmer);
+			ProjectDAO dao = new ProjectDAO();
+			dao.Save(project);
 		}
 	}
 }
