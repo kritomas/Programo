@@ -1,5 +1,3 @@
-use krizko;
-
 create table Lang
 (
 	id int primary key identity(1, 1),
