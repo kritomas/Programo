@@ -6,15 +6,10 @@ namespace Programo
 	{
 		static void Main(string[] args)
 		{
-			Work work = new Work
+			foreach (string arg in args)
 			{
-				project_id = 1,
-				programmer_id = 1,
-				date_start = DateTime.Parse("2021-11-01"),
-				date_end = DateTime.Parse("2023-10-25"),
-			};
-			WorkDAO dao = new WorkDAO();
-			dao.Save(work);
+				Console.WriteLine(arg);
+			}
 		}
 	}
 }
