@@ -6,15 +6,15 @@ namespace Programo
 	{
 		static void Main(string[] args)
 		{
-			Certification cert = new Certification
+			Work work = new Work
 			{
-				lang_id = 1,
+				project_id = 1,
 				programmer_id = 1,
-				date_start = DateTime.Parse("2013-09-01"),
-				date_end = DateTime.Parse("2020-05-01"),
+				date_start = DateTime.Parse("2021-11-01"),
+				date_end = DateTime.Parse("2023-10-25"),
 			};
-			CertificationDAO dao = new CertificationDAO();
-			dao.Save(cert);
+			WorkDAO dao = new WorkDAO();
+			dao.Save(work);
 		}
 	}
 }
