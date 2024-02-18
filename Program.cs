@@ -1,10 +1,18 @@
-﻿namespace Programo
+﻿using System.Configuration;
+
+namespace Programo
 {
 	internal class Program
 	{
 		static void Main(string[] args)
 		{
-			Console.WriteLine("Hello, World!");
+			Lang lang = new Lang
+			{
+				ID = 1,
+				name = "Scratch"
+			};
+			LangDAO dao = new LangDAO();
+			dao.Save(lang);
 		}
 	}
 }
