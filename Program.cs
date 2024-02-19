@@ -6,9 +6,22 @@ namespace Programo
 	{
 		static void Main(string[] args)
 		{
-			foreach (string arg in args)
+			Dictionary<string, DAOAction> actions = new Dictionary<string, DAOAction>();
+			actions.Add("language", new DAOActionLanguage());
+
+			if (args.Length < 2 || !actions.ContainsKey(args[1]))
 			{
-				Console.WriteLine(arg);
+				Console.WriteLine("create language");
+				return;
+			}
+
+			try
+			{
+				actions[args[1]].perform(args);
+			} catch (Exception ex)
+			{
+				Console.WriteLine("Error:");
+				Console.WriteLine(ex.Message);
 			}
 		}
 	}

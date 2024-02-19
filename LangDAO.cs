@@ -15,7 +15,7 @@ namespace Programo
 
 			using (SqlCommand command = new SqlCommand("Delete FROM Lang where id = @id", conn))
 			{
-				command.Parameters.Add("@id", (System.Data.SqlDbType)element.ID);
+				command.Parameters.Add(new SqlParameter("@id", element.ID));
 				command.ExecuteNonQuery();
 				element.ID = 0;
 			}
@@ -51,6 +51,29 @@ namespace Programo
 			using (SqlCommand command = new SqlCommand("SELECT * FROM Lang WHERE id = @Id", conn))
 			{
 				command.Parameters.Add(new SqlParameter("@id", id));
+				SqlDataReader reader = command.ExecuteReader();
+
+				while (reader.Read())
+				{
+					lang = new Lang
+					{
+						ID = Convert.ToInt32(reader[0].ToString()),
+						name = reader[1].ToString()
+					};
+				}
+				reader.Close();
+				return lang;
+			}
+		}
+		public Lang GetByName(string name)
+		{
+			Lang lang = null;
+			SqlConnection conn = DatabaseSingleton.GetInstance();
+
+
+			using (SqlCommand command = new SqlCommand("SELECT * FROM Lang WHERE name = @name", conn))
+			{
+				command.Parameters.Add(new SqlParameter("@name", name));
 				SqlDataReader reader = command.ExecuteReader();
 
 				while (reader.Read())
