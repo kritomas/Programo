@@ -42,4 +42,68 @@ namespace Programo
 			}
 		}
 	}
+
+	class DAOActionProgrammer : DAOAction
+	{
+		public override void perform(string[] args)
+		{
+			if (args.Length < 2)
+			{
+				Console.WriteLine("create programmer");
+				return;
+			}
+			switch (args[0])
+			{
+				case "create":
+					Programmer.create(args);
+					break;
+				case "delete":
+					Programmer.delete(args);
+					break;
+				case "rename":
+					Programmer.rename(args);
+					break;
+				case "list":
+					Programmer.list(args);
+					break;
+				default:
+					throw new Exception("Unknown action");
+			}
+		}
+	}
+
+	class DAOActionProject : DAOAction
+	{
+		public override void perform(string[] args)
+		{
+			if (args.Length < 2)
+			{
+				Console.WriteLine("create project");
+				return;
+			}
+			switch (args[0])
+			{
+				case "create":
+					Project.create(args);
+					break;
+				case "delete":
+					Project.delete(args);
+					break;
+				case "rename":
+					Project.rename(args);
+					break;
+				case "list":
+					Project.list(args);
+					break;
+				case "abandon":
+					Project.abandon(args);
+					break;
+				case "unabandon":
+					Project.unabandon(args);
+					break;
+				default:
+					throw new Exception("Unknown action");
+			}
+		}
+	}
 }

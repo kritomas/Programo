@@ -8,10 +8,12 @@ namespace Programo
 		{
 			Dictionary<string, DAOAction> actions = new Dictionary<string, DAOAction>();
 			actions.Add("language", new DAOActionLanguage());
+			actions.Add("programmer", new DAOActionProgrammer());
+			actions.Add("project", new DAOActionProject());
 
 			if (args.Length < 2 || !actions.ContainsKey(args[1]))
 			{
-				Console.WriteLine("create language");
+				Console.WriteLine("create language|programmer");
 				return;
 			}
 

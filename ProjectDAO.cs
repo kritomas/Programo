@@ -67,6 +67,30 @@ namespace Programo
 				return project;
 			}
 		}
+		public Project GetByName(string name)
+		{
+			Project project = null;
+			SqlConnection conn = DatabaseSingleton.GetInstance();
+
+
+			using (SqlCommand command = new SqlCommand("SELECT * FROM Project WHERE name = @name", conn))
+			{
+				command.Parameters.Add(new SqlParameter("@name", name));
+				SqlDataReader reader = command.ExecuteReader();
+
+				while (reader.Read())
+				{
+					project = new Project
+					{
+						ID = Convert.ToInt32(reader[0].ToString()),
+						name = reader[1].ToString(),
+						is_abandoned = Convert.ToBoolean(reader[2].ToString())
+					};
+				}
+				reader.Close();
+				return project;
+			}
+		}
 
 		public void Save(Project element)
         {

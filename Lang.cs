@@ -43,7 +43,7 @@ namespace Programo
 		{
 			if (args.Length < 4)
 			{
-				Console.WriteLine("delete language old_name new_name");
+				Console.WriteLine("rename language old_name new_name");
 				return;
 			}
 			LangDAO dao = new LangDAO();
