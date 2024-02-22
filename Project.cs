@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.FileIO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -86,6 +87,32 @@ namespace Programo
 			if (p == null) throw new Exception("Project doesn't exist.");
 			p.is_abandoned = false;
 			dao.Save(p);
+		}
+
+		public static Project parseCSV(string[] line)
+		{
+			return new Project { name = line[0], is_abandoned = Convert.ToBoolean(line[1]) };
+		}
+
+		public static void import(string[] args)
+		{
+			if (args.Length < 3)
+			{
+				Console.WriteLine("import project csv_file");
+				return;
+			}
+			using (TextFieldParser parser = new TextFieldParser(args[2]))
+			{
+				parser.TextFieldType = FieldType.Delimited;
+				parser.SetDelimiters(",");
+				while (!parser.EndOfData)
+				{
+					//Process row
+					string[] fields = parser.ReadFields();
+					ProjectDAO dao = new ProjectDAO();
+					dao.Save(parseCSV(fields));
+				}
+			}
 		}
 	}
 }

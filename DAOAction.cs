@@ -101,6 +101,9 @@ namespace Programo
 				case "unabandon":
 					Project.unabandon(args);
 					break;
+				case "import":
+					Project.import(args);
+					break;
 				default:
 					throw new Exception("Unknown action");
 			}
