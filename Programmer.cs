@@ -57,14 +57,23 @@ namespace Programo
 		{
 			ProgrammerDAO dao = new ProgrammerDAO();
 			CertificationDAO certificationDao = new CertificationDAO();
+			WorkDAO workDao = new WorkDAO();
 			LangDAO langDao = new LangDAO();
+			ProjectDAO projectDao = new ProjectDAO();
 			foreach (Programmer p in dao.GetAll())
 			{
 				Console.WriteLine(p);
+				Console.WriteLine("Certificates:");
 				foreach (Certification c in certificationDao.GetAllByProgrammer(p))
 				{
 					Lang l = langDao.GetByID(c.lang_id);
 					Console.WriteLine(l + " " + c.date_start + " - " + c.date_end);
+				}
+				Console.WriteLine("Projects:");
+				foreach (Work w in workDao.GetAllByProgrammer(p))
+				{
+					Project proj = projectDao.GetByID(w.project_id);
+					Console.WriteLine(proj + " " + w.date_start + " - " + w.date_end);
 				}
 				Console.WriteLine();
 			}

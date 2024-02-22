@@ -44,6 +44,29 @@ namespace Programo
 			}
 
 		}
+		public IEnumerable<Work> GetAllByProgrammer(Programmer programmer)
+		{
+			SqlConnection conn = DatabaseSingleton.GetInstance();
+
+			using (SqlCommand command = new SqlCommand("SELECT * FROM Work WHERE programmer_id = @id", conn))
+			{
+				command.Parameters.Add(new SqlParameter("@id", programmer.ID));
+				SqlDataReader reader = command.ExecuteReader();
+				while (reader.Read())
+				{
+					Work work = new Work
+					{
+						ID = Convert.ToInt32(reader[0].ToString()),
+						project_id = Convert.ToInt32(reader[1].ToString()),
+						programmer_id = Convert.ToInt32(reader[2].ToString()),
+						date_start = DateTime.Parse(reader[3].ToString()),
+						date_end = DateTime.Parse(reader[4].ToString())
+					};
+					yield return work;
+				}
+				reader.Close();
+			}
+		}
 
 		public Work GetByID(int id)
         {

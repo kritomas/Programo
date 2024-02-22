@@ -11,6 +11,7 @@ namespace Programo
 			actions.Add("programmer", new DAOActionProgrammer());
 			actions.Add("project", new DAOActionProject());
 			actions.Add("certify", new DAOActionCertification());
+			actions.Add("assign", new DAOActionWork());
 
 			//try
 			//{

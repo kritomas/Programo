@@ -121,4 +121,18 @@ namespace Programo
 			}
 		}
 	}
+	class DAOActionWork : DAOAction
+	{
+		public override void perform(string[] args)
+		{
+			switch (args[0])
+			{
+				case "assign":
+					Work.assign(args);
+					break;
+				default:
+					throw new Exception("Unknown action");
+			}
+		}
+	}
 }
