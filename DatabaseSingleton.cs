@@ -24,6 +24,7 @@ namespace Programo
 				consStringBuilder.InitialCatalog = ReadSetting("Database");
 				consStringBuilder.DataSource = ReadSetting("DataSource");
 				consStringBuilder.ConnectTimeout = 30;
+				consStringBuilder.MultipleActiveResultSets = true;
 				conn = new SqlConnection(consStringBuilder.ConnectionString);
 				conn.Open();
 			}

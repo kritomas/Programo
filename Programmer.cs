@@ -56,9 +56,17 @@ namespace Programo
 		public static void list(string[] args)
 		{
 			ProgrammerDAO dao = new ProgrammerDAO();
+			CertificationDAO certificationDao = new CertificationDAO();
+			LangDAO langDao = new LangDAO();
 			foreach (Programmer p in dao.GetAll())
 			{
 				Console.WriteLine(p);
+				foreach (Certification c in certificationDao.GetAllByProgrammer(p))
+				{
+					Lang l = langDao.GetByID(c.lang_id);
+					Console.WriteLine(l + " " + c.date_start + " - " + c.date_end);
+				}
+				Console.WriteLine();
 			}
 		}
 	}

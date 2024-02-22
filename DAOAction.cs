@@ -106,4 +106,19 @@ namespace Programo
 			}
 		}
 	}
+
+	class DAOActionCertification : DAOAction
+	{
+		public override void perform(string[] args)
+		{
+			switch (args[0])
+			{
+				case "certify":
+					Certification.certify(args);
+					break;
+				default:
+					throw new Exception("Unknown action");
+			}
+		}
+	}
 }

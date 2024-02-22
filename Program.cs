@@ -10,21 +10,32 @@ namespace Programo
 			actions.Add("language", new DAOActionLanguage());
 			actions.Add("programmer", new DAOActionProgrammer());
 			actions.Add("project", new DAOActionProject());
+			actions.Add("certify", new DAOActionCertification());
 
-			if (args.Length < 2 || !actions.ContainsKey(args[1]))
-			{
-				Console.WriteLine("create language|programmer");
-				return;
-			}
-
-			try
-			{
-				actions[args[1]].perform(args);
-			} catch (Exception ex)
+			//try
+			//{
+				if (args.Length < 2)
+				{
+					// TODO
+				}
+				else if (actions.ContainsKey(args[1]))
+				{
+					actions[args[1]].perform(args);
+				}
+				else if (actions.ContainsKey(args[0]))
+				{
+					actions[args[0]].perform(args);
+				}
+				else
+				{
+					Console.WriteLine("WRONG COMMAND KRONK");
+				}
+			/*}
+			catch (Exception ex)
 			{
 				Console.WriteLine("Error:");
 				Console.WriteLine(ex.Message);
-			}
+			}*/
 		}
 	}
 }

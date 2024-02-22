@@ -42,7 +42,29 @@ namespace Programo
 				}
 				reader.Close();
 			}
+		}
+		public IEnumerable<Certification> GetAllByProgrammer(Programmer programmer)
+		{
+			SqlConnection conn = DatabaseSingleton.GetInstance();
 
+			using (SqlCommand command = new SqlCommand("SELECT * FROM Certification WHERE programmer_id = @id", conn))
+			{
+				command.Parameters.Add(new SqlParameter("@id", programmer.ID));
+				SqlDataReader reader = command.ExecuteReader();
+				while (reader.Read())
+				{
+					Certification certification = new Certification
+					{
+						ID = Convert.ToInt32(reader[0].ToString()),
+						lang_id = Convert.ToInt32(reader[1].ToString()),
+						programmer_id = Convert.ToInt32(reader[2].ToString()),
+						date_start = DateTime.Parse(reader[3].ToString()),
+						date_end = DateTime.Parse(reader[4].ToString())
+					};
+					yield return certification;
+				}
+				reader.Close();
+			}
 		}
 
 		public Certification GetByID(int id)
