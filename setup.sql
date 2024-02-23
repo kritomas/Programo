@@ -36,3 +36,11 @@ create table Work
 	date_end datetime not null,
 	check(date_end >= date_start)
 );
+
+create table Feature
+(
+	id int primary key identity(1, 1),
+	project_id int foreign key references Project(id) not null,
+	name varchar(250) not null,
+	is_complete bit not null default 0
+);
