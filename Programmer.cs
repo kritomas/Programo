@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.FileIO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -76,6 +77,32 @@ namespace Programo
 					Console.WriteLine(proj + " " + w.date_start + " - " + w.date_end);
 				}
 				Console.WriteLine();
+			}
+		}
+
+		public static Programmer parseCSV(string[] line)
+		{
+			return new Programmer { username = line[0] };
+		}
+
+		public static void import(string[] args)
+		{
+			if (args.Length < 3)
+			{
+				Console.WriteLine("import programmer csv_file");
+				return;
+			}
+			using (TextFieldParser parser = new TextFieldParser(args[2]))
+			{
+				parser.TextFieldType = FieldType.Delimited;
+				parser.SetDelimiters(",");
+				while (!parser.EndOfData)
+				{
+					//Process row
+					string[] fields = parser.ReadFields();
+					ProgrammerDAO dao = new ProgrammerDAO();
+					dao.Save(parseCSV(fields));
+				}
 			}
 		}
 	}

@@ -66,6 +66,9 @@ namespace Programo
 				case "list":
 					Programmer.list(args);
 					break;
+				case "import":
+					Programmer.import(args);
+					break;
 				default:
 					throw new Exception("Unknown action");
 			}
