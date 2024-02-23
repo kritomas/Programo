@@ -13,6 +13,11 @@ namespace Programo
 		public string name = "";
 		public bool is_complete = false;
 
+		public override string ToString()
+		{
+			return name + (is_complete ? " (complete)" : "");
+		}
+
 		public static void create(string[] args)
 		{
 			if (args.Length < 5)

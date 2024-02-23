@@ -57,9 +57,16 @@ namespace Programo
 		public static void list(string[] args)
 		{
 			ProjectDAO dao = new ProjectDAO();
+			FeatureDAO featureDAO = new FeatureDAO();
 			foreach (Project p in dao.GetAll())
 			{
 				Console.WriteLine(p);
+				Console.WriteLine("Features:");
+				foreach (Feature f in featureDAO.GetAllByProject(p))
+				{
+					Console.WriteLine(f);
+				}
+				Console.WriteLine();
 			}
 		}
 		public static void abandon(string[] args)
