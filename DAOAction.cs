@@ -138,4 +138,25 @@ namespace Programo
 			}
 		}
 	}
+
+	class DAOActionFeature : DAOAction
+	{
+		public override void perform(string[] args)
+		{
+			switch (args[0])
+			{
+				case "create":
+					Feature.create(args);
+					break;
+				case "complete":
+					Feature.complete(args);
+					break;
+				case "uncomplete":
+					Feature.uncomplete(args);
+					break;
+				default:
+					throw new Exception("Unknown action");
+			}
+		}
+	}
 }

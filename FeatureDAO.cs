@@ -91,6 +91,32 @@ namespace Programo
 				return feature;
 			}
 		}
+		public Feature GetByIDName(Feature f)
+		{
+			Feature feature = null;
+			SqlConnection conn = DatabaseSingleton.GetInstance();
+
+
+			using (SqlCommand command = new SqlCommand("SELECT * FROM Feature WHERE project_id = @project_id and name = @name", conn))
+			{
+				command.Parameters.Add(new SqlParameter("@project_id", f.project_id));
+				command.Parameters.Add(new SqlParameter("@name", f.name));
+				SqlDataReader reader = command.ExecuteReader();
+
+				while (reader.Read())
+				{
+					feature = new Feature
+					{
+						ID = Convert.ToInt32(reader[0].ToString()),
+						project_id = Convert.ToInt32(reader[1].ToString()),
+						name = reader[2].ToString(),
+						is_complete = Convert.ToBoolean(reader[3].ToString())
+					};
+				}
+				reader.Close();
+				return feature;
+			}
+		}
 
 		public void Save(Feature element)
         {
