@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Programo
 {
+	/// <summary>
+	/// User Interface base class.
+	/// </summary>
 	class DAOAction
 	{
 		public virtual void perform(string[] args)

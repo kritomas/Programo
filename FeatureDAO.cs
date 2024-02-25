@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Programo
 {
+	/// <summary>
+	/// DAO for Features.
+	/// </summary>
     public class FeatureDAO
     {
         public void Delete(Feature element)
@@ -43,6 +46,11 @@ namespace Programo
 			}
 
 		}
+		/// <summary>
+		/// Gets all Features in the specified Project.
+		/// </summary>
+		/// <param name="project"></param>
+		/// <returns></returns>
 		public IEnumerable<Feature> GetAllByProject(Project project)
 		{
 			SqlConnection conn = DatabaseSingleton.GetInstance();
@@ -91,6 +99,11 @@ namespace Programo
 				return feature;
 			}
 		}
+		/// <summary>
+		/// Finds the Feature with the specified name and project ID.
+		/// </summary>
+		/// <param name="f"></param>
+		/// <returns></returns>
 		public Feature GetByIDName(Feature f)
 		{
 			Feature feature = null;
@@ -132,7 +145,6 @@ namespace Programo
 					command.Parameters.Add(new SqlParameter("@name", element.name));
 					command.Parameters.Add(new SqlParameter("@is_complete", element.is_complete));
 					command.ExecuteNonQuery();
-					//zjistim id posledniho vlozeneho zaznamu
 					command.CommandText = "Select @@Identity";
 					element.ID = Convert.ToInt32(command.ExecuteScalar());
 				}

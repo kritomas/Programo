@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Programo
 {
+	/// <summary>
+	/// DAO for Certificaions.
+	/// </summary>
     public class CertificationDAO
     {
         public void Delete(Certification element)
@@ -43,6 +46,11 @@ namespace Programo
 				reader.Close();
 			}
 		}
+		/// <summary>
+		/// Gets all Certifications of the specified Programmer.
+		/// </summary>
+		/// <param name="programmer"></param>
+		/// <returns></returns>
 		public IEnumerable<Certification> GetAllByProgrammer(Programmer programmer)
 		{
 			SqlConnection conn = DatabaseSingleton.GetInstance();
@@ -109,7 +117,6 @@ namespace Programo
 					command.Parameters.Add(new SqlParameter("@date_start", element.date_start));
 					command.Parameters.Add(new SqlParameter("@date_end", element.date_end));
 					command.ExecuteNonQuery();
-					//zjistim id posledniho vlozeneho zaznamu
 					command.CommandText = "Select @@Identity";
 					element.ID = Convert.ToInt32(command.ExecuteScalar());
 				}

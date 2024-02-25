@@ -18,6 +18,11 @@ namespace Programo
 			return username;
 		}
 
+		/// <summary>
+		/// Parses a single CSV line.
+		/// </summary>
+		/// <param name="line">The line fields to parse.</param>
+		/// <returns>The parsed Programmer.</returns>
 		public static Programmer parseCSV(string[] line)
 		{
 			return new Programmer { username = line[0] };

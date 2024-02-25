@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Programo
 {
+	/// <summary>
+	/// DAO for Programmers.
+	/// </summary>
     public class ProgrammerDAO
     {
         public void Delete(Programmer element)
@@ -101,7 +104,6 @@ namespace Programo
 				{
 					command.Parameters.Add(new SqlParameter("@username", element.username));
 					command.ExecuteNonQuery();
-					//zjistim id posledniho vlozeneho zaznamu
 					command.CommandText = "Select @@Identity";
 					element.ID = Convert.ToInt32(command.ExecuteScalar());
 				}

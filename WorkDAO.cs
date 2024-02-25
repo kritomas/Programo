@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Programo
 {
+	/// <summary>
+	/// DAO for Work.
+	/// </summary>
     public class WorkDAO
     {
         public void Delete(Work element)
@@ -44,6 +47,11 @@ namespace Programo
 			}
 
 		}
+		/// <summary>
+		/// Gets all Work assigned to the specified Programmer.
+		/// </summary>
+		/// <param name="programmer"></param>
+		/// <returns></returns>
 		public IEnumerable<Work> GetAllByProgrammer(Programmer programmer)
 		{
 			SqlConnection conn = DatabaseSingleton.GetInstance();
@@ -110,7 +118,6 @@ namespace Programo
 					command.Parameters.Add(new SqlParameter("@date_start", element.date_start));
 					command.Parameters.Add(new SqlParameter("@date_end", element.date_end));
 					command.ExecuteNonQuery();
-					//zjistim id posledniho vlozeneho zaznamu
 					command.CommandText = "Select @@Identity";
 					element.ID = Convert.ToInt32(command.ExecuteScalar());
 				}

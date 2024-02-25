@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Programo
 {
+	/// <summary>
+	/// Singleton for database access.
+	/// </summary>
     public class DatabaseSingleton
     {
 		private static SqlConnection conn = null;
@@ -40,9 +43,13 @@ namespace Programo
 			}
 		}
 
+		/// <summary>
+		/// Reads a value from App.config.
+		/// </summary>
+		/// <param name="key">The config key to read.</param>
+		/// <returns>The config value read.</returns>
 		private static string ReadSetting(string key)
 		{
-			//nutno doinstalovat, VS nabídne doinstalaci samo
 			var appSettings = ConfigurationManager.AppSettings;
 			string result = appSettings[key] ?? "Not Found";
 			return result;

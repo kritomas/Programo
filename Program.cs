@@ -4,6 +4,9 @@ namespace Programo
 {
 	internal class Program
 	{
+		/// <summary>
+		/// Prints usage information.
+		/// </summary>
 		static void usage()
 		{
 			Console.WriteLine("Usage:");

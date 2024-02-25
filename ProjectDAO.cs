@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Programo
 {
+	/// <summary>
+	/// DAO for Projects.
+	/// </summary>
     public class ProjectDAO
     {
         public void Delete(Project element)
@@ -105,7 +108,6 @@ namespace Programo
 					command.Parameters.Add(new SqlParameter("@name", element.name));
 					command.Parameters.Add(new SqlParameter("@is_abandoned", element.is_abandoned));
 					command.ExecuteNonQuery();
-					//zjistim id posledniho vlozeneho zaznamu
 					command.CommandText = "Select @@Identity";
 					element.ID = Convert.ToInt32(command.ExecuteScalar());
 				}
