@@ -20,7 +20,7 @@ This is done by creating a file named `Programo.dll.config` in the same folder a
 </configuration>
 ```
 
-Then, you need to setup the database. Login with your database management studio of choice, and run `setup.sql`.
+Then, you need to setup the database. Log into an **empty** database (no tables whatsoever) with your database management studio of choice, and run `setup.sql`.
 
 The program can then be run from the terminal.
 
