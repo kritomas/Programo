@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.FileIO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,51 @@ namespace Programo
 
 	class DAOActionLanguage : DAOAction
 	{
+		public static void create(string[] args)
+		{
+			if (args.Length < 3)
+			{
+				Console.WriteLine("create language name");
+				return;
+			}
+			LangDAO dao = new LangDAO();
+			if (dao.GetByName(args[2]) != null) throw new Exception("Language already exists.");
+			dao.Save(new Lang { name = args[2] });
+		}
+		public static void delete(string[] args)
+		{
+			if (args.Length < 3)
+			{
+				Console.WriteLine("delete language name");
+				return;
+			}
+			LangDAO dao = new LangDAO();
+			Lang l = dao.GetByName(args[2]);
+			if (l == null) throw new Exception("Language doesn't exist.");
+			dao.Delete(l);
+		}
+		public static void rename(string[] args)
+		{
+			if (args.Length < 4)
+			{
+				Console.WriteLine("rename language old_name new_name");
+				return;
+			}
+			LangDAO dao = new LangDAO();
+			Lang l = dao.GetByName(args[2]);
+			if (l == null) throw new Exception("Language doesn't exist.");
+			l.name = args[3];
+			dao.Save(l);
+		}
+		public static void list(string[] args)
+		{
+			LangDAO dao = new LangDAO();
+			foreach (Lang l in dao.GetAll())
+			{
+				Console.WriteLine(l);
+			}
+		}
+
 		public override void perform(string[] args)
 		{
 			if (args.Length < 2)
@@ -26,16 +72,16 @@ namespace Programo
 			switch (args[0])
 			{
 				case "create":
-					Lang.create(args);
+					create(args);
 					break;
 				case "delete":
-					Lang.delete(args);
+					delete(args);
 					break;
 				case "rename":
-					Lang.rename(args);
+					rename(args);
 					break;
 				case "list":
-					Lang.list(args);
+					list(args);
 					break;
 				default:
 					throw new Exception("Unknown action");
@@ -45,6 +91,89 @@ namespace Programo
 
 	class DAOActionProgrammer : DAOAction
 	{
+		public static void create(string[] args)
+		{
+			if (args.Length < 3)
+			{
+				Console.WriteLine("create programmer name");
+				return;
+			}
+			ProgrammerDAO dao = new ProgrammerDAO();
+			if (dao.GetByUsername(args[2]) != null) throw new Exception("Programmer already exists.");
+			dao.Save(new Programmer { username = args[2] });
+		}
+		public static void delete(string[] args)
+		{
+			if (args.Length < 3)
+			{
+				Console.WriteLine("delete programmer name");
+				return;
+			}
+			ProgrammerDAO dao = new ProgrammerDAO();
+			Programmer p = dao.GetByUsername(args[2]);
+			if (p == null) throw new Exception("Programmer doesn't exist.");
+			dao.Delete(p);
+		}
+		public static void rename(string[] args)
+		{
+			if (args.Length < 4)
+			{
+				Console.WriteLine("rename programmer old_name new_name");
+				return;
+			}
+			ProgrammerDAO dao = new ProgrammerDAO();
+			Programmer p = dao.GetByUsername(args[2]);
+			if (p == null) throw new Exception("Programmer doesn't exist.");
+			p.username = args[3];
+			dao.Save(p);
+		}
+		public static void list(string[] args)
+		{
+			ProgrammerDAO dao = new ProgrammerDAO();
+			CertificationDAO certificationDao = new CertificationDAO();
+			WorkDAO workDao = new WorkDAO();
+			LangDAO langDao = new LangDAO();
+			ProjectDAO projectDao = new ProjectDAO();
+			foreach (Programmer p in dao.GetAll())
+			{
+				Console.WriteLine(p);
+				Console.WriteLine("Certificates:");
+				foreach (Certification c in certificationDao.GetAllByProgrammer(p))
+				{
+					Lang l = langDao.GetByID(c.lang_id);
+					Console.WriteLine(l + " " + c.date_start + " - " + c.date_end);
+				}
+				Console.WriteLine("Projects:");
+				foreach (Work w in workDao.GetAllByProgrammer(p))
+				{
+					Project proj = projectDao.GetByID(w.project_id);
+					Console.WriteLine(proj + " " + w.date_start + " - " + w.date_end);
+				}
+				Console.WriteLine();
+			}
+		}
+
+		public static void import(string[] args)
+		{
+			if (args.Length < 3)
+			{
+				Console.WriteLine("import programmer csv_file");
+				return;
+			}
+			using (TextFieldParser parser = new TextFieldParser(args[2]))
+			{
+				parser.TextFieldType = FieldType.Delimited;
+				parser.SetDelimiters(",");
+				while (!parser.EndOfData)
+				{
+					//Process row
+					string[] fields = parser.ReadFields();
+					ProgrammerDAO dao = new ProgrammerDAO();
+					dao.Save(Programmer.parseCSV(fields));
+				}
+			}
+		}
+
 		public override void perform(string[] args)
 		{
 			if (args.Length < 2)
@@ -55,19 +184,19 @@ namespace Programo
 			switch (args[0])
 			{
 				case "create":
-					Programmer.create(args);
+					create(args);
 					break;
 				case "delete":
-					Programmer.delete(args);
+					delete(args);
 					break;
 				case "rename":
-					Programmer.rename(args);
+					rename(args);
 					break;
 				case "list":
-					Programmer.list(args);
+					list(args);
 					break;
 				case "import":
-					Programmer.import(args);
+					import(args);
 					break;
 				default:
 					throw new Exception("Unknown action");
@@ -77,6 +206,105 @@ namespace Programo
 
 	class DAOActionProject : DAOAction
 	{
+		public static void create(string[] args)
+		{
+			if (args.Length < 3)
+			{
+				Console.WriteLine("create project name");
+				return;
+			}
+			ProjectDAO dao = new ProjectDAO();
+			if (dao.GetByName(args[2]) != null) throw new Exception("Project already exists.");
+			dao.Save(new Project { name = args[2] });
+		}
+		public static void delete(string[] args)
+		{
+			if (args.Length < 3)
+			{
+				Console.WriteLine("delete project name");
+				return;
+			}
+			ProjectDAO dao = new ProjectDAO();
+			Project p = dao.GetByName(args[2]);
+			if (p == null) throw new Exception("Project doesn't exist.");
+			dao.Delete(p);
+		}
+		public static void rename(string[] args)
+		{
+			if (args.Length < 4)
+			{
+				Console.WriteLine("rename project old_name new_name");
+				return;
+			}
+			ProjectDAO dao = new ProjectDAO();
+			Project p = dao.GetByName(args[2]);
+			if (p == null) throw new Exception("Project doesn't exist.");
+			p.name = args[3];
+			dao.Save(p);
+		}
+		public static void list(string[] args)
+		{
+			ProjectDAO dao = new ProjectDAO();
+			FeatureDAO featureDAO = new FeatureDAO();
+			foreach (Project p in dao.GetAll())
+			{
+				Console.WriteLine(p);
+				Console.WriteLine("Features:");
+				foreach (Feature f in featureDAO.GetAllByProject(p))
+				{
+					Console.WriteLine(f);
+				}
+				Console.WriteLine();
+			}
+		}
+		public static void abandon(string[] args)
+		{
+			if (args.Length < 3)
+			{
+				Console.WriteLine("abandon project name");
+				return;
+			}
+			ProjectDAO dao = new ProjectDAO();
+			Project p = dao.GetByName(args[2]);
+			if (p == null) throw new Exception("Project doesn't exist.");
+			p.is_abandoned = true;
+			dao.Save(p);
+		}
+		public static void unabandon(string[] args)
+		{
+			if (args.Length < 3)
+			{
+				Console.WriteLine("unabandon project name");
+				return;
+			}
+			ProjectDAO dao = new ProjectDAO();
+			Project p = dao.GetByName(args[2]);
+			if (p == null) throw new Exception("Project doesn't exist.");
+			p.is_abandoned = false;
+			dao.Save(p);
+		}
+
+		public static void import(string[] args)
+		{
+			if (args.Length < 3)
+			{
+				Console.WriteLine("import project csv_file");
+				return;
+			}
+			using (TextFieldParser parser = new TextFieldParser(args[2]))
+			{
+				parser.TextFieldType = FieldType.Delimited;
+				parser.SetDelimiters(",");
+				while (!parser.EndOfData)
+				{
+					//Process row
+					string[] fields = parser.ReadFields();
+					ProjectDAO dao = new ProjectDAO();
+					dao.Save(Project.parseCSV(fields));
+				}
+			}
+		}
+
 		public override void perform(string[] args)
 		{
 			if (args.Length < 2)
@@ -87,25 +315,25 @@ namespace Programo
 			switch (args[0])
 			{
 				case "create":
-					Project.create(args);
+					create(args);
 					break;
 				case "delete":
-					Project.delete(args);
+					delete(args);
 					break;
 				case "rename":
-					Project.rename(args);
+					rename(args);
 					break;
 				case "list":
-					Project.list(args);
+					list(args);
 					break;
 				case "abandon":
-					Project.abandon(args);
+					abandon(args);
 					break;
 				case "unabandon":
-					Project.unabandon(args);
+					unabandon(args);
 					break;
 				case "import":
-					Project.import(args);
+					import(args);
 					break;
 				default:
 					throw new Exception("Unknown action");
@@ -115,12 +343,36 @@ namespace Programo
 
 	class DAOActionCertification : DAOAction
 	{
+		public static void certify(string[] args)
+		{
+			if (args.Length < 5)
+			{
+				Console.WriteLine("certify programmer language from to");
+				return;
+			}
+			ProgrammerDAO programmerDao = new ProgrammerDAO();
+			Programmer programmer = programmerDao.GetByUsername(args[1]);
+			if (programmer == null) throw new Exception("Programmer doesn't exist.");
+			LangDAO langDao = new LangDAO();
+			Lang lang = langDao.GetByName(args[2]);
+			if (lang == null) throw new Exception("Language doesn't exist.");
+
+			CertificationDAO dao = new CertificationDAO();
+			dao.Save(new Certification
+			{
+				programmer_id = programmer.ID,
+				lang_id = lang.ID,
+				date_start = DateTime.Parse(args[3]),
+				date_end = DateTime.Parse(args[4])
+			});
+		}
+
 		public override void perform(string[] args)
 		{
 			switch (args[0])
 			{
 				case "certify":
-					Certification.certify(args);
+					certify(args);
 					break;
 				default:
 					throw new Exception("Unknown action");
@@ -129,12 +381,36 @@ namespace Programo
 	}
 	class DAOActionWork : DAOAction
 	{
+		public static void assign(string[] args)
+		{
+			if (args.Length < 5)
+			{
+				Console.WriteLine("assign programmer project from to");
+				return;
+			}
+			ProgrammerDAO programmerDao = new ProgrammerDAO();
+			Programmer programmer = programmerDao.GetByUsername(args[1]);
+			if (programmer == null) throw new Exception("Programmer doesn't exist.");
+			ProjectDAO projectDao = new ProjectDAO();
+			Project project = projectDao.GetByName(args[2]);
+			if (project == null) throw new Exception("Project doesn't exist.");
+
+			WorkDAO dao = new WorkDAO();
+			dao.Save(new Work
+			{
+				programmer_id = programmer.ID,
+				project_id = project.ID,
+				date_start = DateTime.Parse(args[3]),
+				date_end = DateTime.Parse(args[4])
+			});
+		}
+
 		public override void perform(string[] args)
 		{
 			switch (args[0])
 			{
 				case "assign":
-					Work.assign(args);
+					assign(args);
 					break;
 				default:
 					throw new Exception("Unknown action");
@@ -144,18 +420,81 @@ namespace Programo
 
 	class DAOActionFeature : DAOAction
 	{
+		public static void create(string[] args)
+		{
+			if (args.Length < 5)
+			{
+				Console.WriteLine("create feature project name is_complete");
+				return;
+			}
+			ProjectDAO projectDao = new ProjectDAO();
+			Project project = projectDao.GetByName(args[2]);
+			if (project == null) throw new Exception("Project doesn't exist.");
+			FeatureDAO dao = new FeatureDAO();
+			Feature parsed = new Feature
+			{
+				project_id = project.ID,
+				name = args[3],
+				is_complete = Convert.ToBoolean(args[4])
+			};
+			if (dao.GetByIDName(parsed) != null) throw new Exception("Feature already exists.");
+			dao.Save(parsed);
+		}
+		public static void complete(string[] args)
+		{
+			if (args.Length < 4)
+			{
+				Console.WriteLine("complete feature project name");
+				return;
+			}
+			ProjectDAO projectDao = new ProjectDAO();
+			Project project = projectDao.GetByName(args[2]);
+			if (project == null) throw new Exception("Project doesn't exist.");
+			FeatureDAO dao = new FeatureDAO();
+			Feature parsed = new Feature
+			{
+				project_id = project.ID,
+				name = args[3]
+			};
+			Feature feature = dao.GetByIDName(parsed);
+			if (feature == null) throw new Exception("Feature doesn't exist.");
+			feature.is_complete = true;
+			dao.Save(feature);
+		}
+		public static void uncomplete(string[] args)
+		{
+			if (args.Length < 4)
+			{
+				Console.WriteLine("complete feature project name");
+				return;
+			}
+			ProjectDAO projectDao = new ProjectDAO();
+			Project project = projectDao.GetByName(args[2]);
+			if (project == null) throw new Exception("Project doesn't exist.");
+			FeatureDAO dao = new FeatureDAO();
+			Feature parsed = new Feature
+			{
+				project_id = project.ID,
+				name = args[3]
+			};
+			Feature feature = dao.GetByIDName(parsed);
+			if (feature == null) throw new Exception("Feature doesn't exist.");
+			feature.is_complete = false;
+			dao.Save(feature);
+		}
+
 		public override void perform(string[] args)
 		{
 			switch (args[0])
 			{
 				case "create":
-					Feature.create(args);
+					create(args);
 					break;
 				case "complete":
-					Feature.complete(args);
+					complete(args);
 					break;
 				case "uncomplete":
-					Feature.uncomplete(args);
+					uncomplete(args);
 					break;
 				default:
 					throw new Exception("Unknown action");
