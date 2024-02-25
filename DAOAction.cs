@@ -21,8 +21,7 @@ namespace Programo
 		{
 			if (args.Length < 3)
 			{
-				Console.WriteLine("create language name");
-				return;
+				throw new Exception("Not enough arguments.");
 			}
 			LangDAO dao = new LangDAO();
 			if (dao.GetByName(args[2]) != null) throw new Exception("Language already exists.");
@@ -32,8 +31,7 @@ namespace Programo
 		{
 			if (args.Length < 3)
 			{
-				Console.WriteLine("delete language name");
-				return;
+				throw new Exception("Not enough arguments.");
 			}
 			LangDAO dao = new LangDAO();
 			Lang l = dao.GetByName(args[2]);
@@ -44,8 +42,7 @@ namespace Programo
 		{
 			if (args.Length < 4)
 			{
-				Console.WriteLine("rename language old_name new_name");
-				return;
+				throw new Exception("Not enough arguments.");
 			}
 			LangDAO dao = new LangDAO();
 			Lang l = dao.GetByName(args[2]);
@@ -66,8 +63,7 @@ namespace Programo
 		{
 			if (args.Length < 2)
 			{
-				Console.WriteLine("create language");
-				return;
+				throw new Exception("Not enough arguments.");
 			}
 			switch (args[0])
 			{
@@ -95,8 +91,7 @@ namespace Programo
 		{
 			if (args.Length < 3)
 			{
-				Console.WriteLine("create programmer name");
-				return;
+				throw new Exception("Not enough arguments.");
 			}
 			ProgrammerDAO dao = new ProgrammerDAO();
 			if (dao.GetByUsername(args[2]) != null) throw new Exception("Programmer already exists.");
@@ -106,8 +101,7 @@ namespace Programo
 		{
 			if (args.Length < 3)
 			{
-				Console.WriteLine("delete programmer name");
-				return;
+				throw new Exception("Not enough arguments.");
 			}
 			ProgrammerDAO dao = new ProgrammerDAO();
 			Programmer p = dao.GetByUsername(args[2]);
@@ -118,8 +112,7 @@ namespace Programo
 		{
 			if (args.Length < 4)
 			{
-				Console.WriteLine("rename programmer old_name new_name");
-				return;
+				throw new Exception("Not enough arguments.");
 			}
 			ProgrammerDAO dao = new ProgrammerDAO();
 			Programmer p = dao.GetByUsername(args[2]);
@@ -157,8 +150,7 @@ namespace Programo
 		{
 			if (args.Length < 3)
 			{
-				Console.WriteLine("import programmer csv_file");
-				return;
+				throw new Exception("Not enough arguments.");
 			}
 			using (TextFieldParser parser = new TextFieldParser(args[2]))
 			{
@@ -178,8 +170,7 @@ namespace Programo
 		{
 			if (args.Length < 2)
 			{
-				Console.WriteLine("create programmer");
-				return;
+				throw new Exception("Not enough arguments.");
 			}
 			switch (args[0])
 			{
@@ -210,8 +201,7 @@ namespace Programo
 		{
 			if (args.Length < 3)
 			{
-				Console.WriteLine("create project name");
-				return;
+				throw new Exception("Not enough arguments.");
 			}
 			ProjectDAO dao = new ProjectDAO();
 			if (dao.GetByName(args[2]) != null) throw new Exception("Project already exists.");
@@ -221,8 +211,7 @@ namespace Programo
 		{
 			if (args.Length < 3)
 			{
-				Console.WriteLine("delete project name");
-				return;
+				throw new Exception("Not enough arguments.");
 			}
 			ProjectDAO dao = new ProjectDAO();
 			Project p = dao.GetByName(args[2]);
@@ -233,8 +222,7 @@ namespace Programo
 		{
 			if (args.Length < 4)
 			{
-				Console.WriteLine("rename project old_name new_name");
-				return;
+				throw new Exception("Not enough arguments.");
 			}
 			ProjectDAO dao = new ProjectDAO();
 			Project p = dao.GetByName(args[2]);
@@ -261,8 +249,7 @@ namespace Programo
 		{
 			if (args.Length < 3)
 			{
-				Console.WriteLine("abandon project name");
-				return;
+				throw new Exception("Not enough arguments.");
 			}
 			ProjectDAO dao = new ProjectDAO();
 			Project p = dao.GetByName(args[2]);
@@ -274,8 +261,7 @@ namespace Programo
 		{
 			if (args.Length < 3)
 			{
-				Console.WriteLine("unabandon project name");
-				return;
+				throw new Exception("Not enough arguments.");
 			}
 			ProjectDAO dao = new ProjectDAO();
 			Project p = dao.GetByName(args[2]);
@@ -288,8 +274,7 @@ namespace Programo
 		{
 			if (args.Length < 3)
 			{
-				Console.WriteLine("import project csv_file");
-				return;
+				throw new Exception("Not enough arguments.");
 			}
 			using (TextFieldParser parser = new TextFieldParser(args[2]))
 			{
@@ -309,8 +294,7 @@ namespace Programo
 		{
 			if (args.Length < 2)
 			{
-				Console.WriteLine("create project");
-				return;
+				throw new Exception("Not enough arguments.");
 			}
 			switch (args[0])
 			{
@@ -347,8 +331,7 @@ namespace Programo
 		{
 			if (args.Length < 5)
 			{
-				Console.WriteLine("certify programmer language from to");
-				return;
+				throw new Exception("Not enough arguments.");
 			}
 			ProgrammerDAO programmerDao = new ProgrammerDAO();
 			Programmer programmer = programmerDao.GetByUsername(args[1]);
@@ -385,8 +368,7 @@ namespace Programo
 		{
 			if (args.Length < 5)
 			{
-				Console.WriteLine("assign programmer project from to");
-				return;
+				throw new Exception("Not enough arguments.");
 			}
 			ProgrammerDAO programmerDao = new ProgrammerDAO();
 			Programmer programmer = programmerDao.GetByUsername(args[1]);
@@ -424,8 +406,7 @@ namespace Programo
 		{
 			if (args.Length < 5)
 			{
-				Console.WriteLine("create feature project name is_complete");
-				return;
+				throw new Exception("Not enough arguments.");
 			}
 			ProjectDAO projectDao = new ProjectDAO();
 			Project project = projectDao.GetByName(args[2]);
@@ -444,8 +425,7 @@ namespace Programo
 		{
 			if (args.Length < 4)
 			{
-				Console.WriteLine("complete feature project name");
-				return;
+				throw new Exception("Not enough arguments.");
 			}
 			ProjectDAO projectDao = new ProjectDAO();
 			Project project = projectDao.GetByName(args[2]);
@@ -465,8 +445,7 @@ namespace Programo
 		{
 			if (args.Length < 4)
 			{
-				Console.WriteLine("complete feature project name");
-				return;
+				throw new Exception("Not enough arguments.");
 			}
 			ProjectDAO projectDao = new ProjectDAO();
 			Project project = projectDao.GetByName(args[2]);
