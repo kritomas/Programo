@@ -29,3 +29,23 @@ The usage is as follows:
 `.\Programo.exe your command here`
 
 The program will tell you which commands are available.
+
+## CSV Import
+
+Some tables support importing from CSV. The tables are in the format:
+
+Project:
+
+```
+name, is_abandoned ("true"/"false")
+name, is_abandoned ("true"/"false")
+name, is_abandoned ("true"/"false")
+```
+
+Programmer:
+
+```
+name
+name
+name
+```
