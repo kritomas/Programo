@@ -1,12 +1,12 @@
 # Programo
 
-A simple database thingy for programmers and certificates and projects and stuff.
+A simple database thingy for maintaining a database of programmers and their projects, certificates, assignments and stuff.
 
 # Usage
 
 Firstly, configuration is necessary.
 
-This is done by creating a file named `App.config`, with the following format:
+This is done by creating a file named `Programo.dll.config` in the same folder as `Programo.dll`, with the following format:
 
 ```
 <?xml version="1.0" encoding="utf-8" ?>
@@ -20,7 +20,9 @@ This is done by creating a file named `App.config`, with the following format:
 </configuration>
 ```
 
-The program can then be used from the terminal.
+Then, you need to setup the database. Login with your database management studio of choice, and run `setup.sql`.
+
+The program can then be run from the terminal.
 
 The usage is as follows:
 
